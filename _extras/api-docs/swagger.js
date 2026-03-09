@@ -1,6 +1,6 @@
 // ⚠️ DO NOT MODIFY THIS FILE — it is part of the project infrastructure.
-// It auto-generates Swagger API docs from your route files.
-// The only change you should make is adding your new route files to the `routes` array below.
+// It auto-generates Swagger API docs by scanning index.js for all registered routes.
+// New routes registered in index.js are picked up automatically — no changes needed here.
 
 /**
  * Swagger API documentation setup.
@@ -38,7 +38,7 @@ export async function setupSwagger(app) {
   };
 
   const outputFile = join(__dirname, 'swagger-output.json');
-  const routes = [join(projectRoot, 'src', 'routes', 'exampleRoute.js')];
+  const routes = [join(projectRoot, 'index.js')];
 
   const generate = swaggerAutogen();
   await generate(outputFile, routes, doc);
