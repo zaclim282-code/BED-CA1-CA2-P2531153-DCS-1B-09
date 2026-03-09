@@ -1,13 +1,14 @@
 ---
 inclusion: fileMatch
-fileMatchPattern: "scripts/**,package.json,.eslintrc*,.prettierrc*,.vscode/**"
+fileMatchPattern: "_extras/api-docs/**,_extras/nodemon.json,package.json,.eslintrc*,.prettierrc*,.vscode/**"
 ---
 
 # Scripts & Tooling
 
-- `scripts/db.js`, `scripts/swagger.js`, `scripts/validate.js` are all Protected_Files.
-- `npm run start:fresh` runs db reset then dev server in sequence.
-- `GET /health` returns 200 with JSON body — used by both `start:fresh` and `validate`.
-- Validation script checks: required files exist, deps installed, server responds, protected file headers intact.
+- `npm run db` runs `node src/db/seed.js` to reset and seed the database.
+- `npm run dev` starts the dev server with nodemon (config at `_extras/nodemon.json`).
+- `npm test` runs Jest with `--roots=_extras/tests` to find test files.
+- `GET /api/health` returns 200 with JSON body.
+- `_extras/api-docs/swagger.js` handles Swagger auto-generation and UI setup. It is imported by `index.js` on startup.
 - Dev server must show clear error on port conflict.
 - `.vscode/extensions.json`: recommend SQLite viewer + REST Client extensions.

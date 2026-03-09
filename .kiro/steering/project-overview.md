@@ -15,4 +15,4 @@ Full requirements: #[[file:.kiro/specs/student-assignment-template/requirements.
 - "Additional Recommendations" in the spec are optional — don't implement unless explicitly asked.
 - Don't invent style rules (quotes, semicolons, indentation) beyond what the spec states.
 - All code should be beginner-readable. Prefer clarity over cleverness.
-- Frontend has a `public/components/` directory for reusable UI components.
+- Frontend has a `src/frontend/components/` directory for reusable UI components.
