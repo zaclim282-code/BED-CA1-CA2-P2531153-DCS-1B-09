@@ -31,7 +31,7 @@ export class AppError extends Error {
  * Express needs all 4 params to treat this as an error handler — don't remove `next`.
  */
 // eslint-disable-next-line no-unused-vars
-export function errorHandler(err, req, res, next) {
+export const errorHandler = (err, req, res, next) => {
   console.error(err);
 
   const code = err.code && ERROR_CODES[err.code] ? err.code : 'INTERNAL_ERROR';
@@ -45,4 +45,4 @@ export function errorHandler(err, req, res, next) {
       status,
     },
   });
-}
+};

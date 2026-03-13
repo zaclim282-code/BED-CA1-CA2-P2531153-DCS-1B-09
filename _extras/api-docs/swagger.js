@@ -27,7 +27,7 @@ const projectRoot = join(__dirname, '..', '..');
  *
  * @param {import('express').Express} app - The Express application instance.
  */
-export async function setupSwagger(app) {
+export const setupSwagger = async (app) => {
   const doc = {
     info: {
       title: 'Student Assignment API',
@@ -45,4 +45,4 @@ export async function setupSwagger(app) {
 
   const swaggerDocument = JSON.parse(readFileSync(outputFile, 'utf-8'));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-}
+};

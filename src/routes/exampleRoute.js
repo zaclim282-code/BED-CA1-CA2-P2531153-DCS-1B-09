@@ -8,24 +8,23 @@
 
 import { Router } from 'express';
 import { body } from 'express-validator';
-import * as controller from '../controllers/exampleController.js';
+import { getAllTasks, getTaskById, createTask, patchTask, deleteTask } from '../controllers/exampleController.js';
 
-export const router = Router();
+export const exampleRouter = Router();
 
-router.get('/', controller.getAllTasks);
-router.get('/:id', controller.getTaskById);
+exampleRouter.get('/', getAllTasks);
+exampleRouter.get('/:id', getTaskById);
 
-router.post(
+exampleRouter.post(
   '/',
   [body('title').notEmpty().withMessage('Title is required')],
-  controller.createTask
+  createTask
 );
 
-router.put(
+exampleRouter.put(
   '/:id',
   [body('title').optional().notEmpty().withMessage('Title is required')],
-  controller.updateTask
+  patchTask
 );
 
-router.delete('/:id', controller.deleteTask);
-
+exampleRouter.delete('/:id', deleteTask);

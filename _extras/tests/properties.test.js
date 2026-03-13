@@ -153,8 +153,8 @@ describe('Property 7: MVC separation — models have no HTTP concerns', () => {
   it('no model file references req or res parameters', () => {
     // Patterns that indicate HTTP handler signatures: (req, res), (req, res, next)
     const httpParamPatterns = [
-      /function\s+\w+\s*\([^)]*\breq\b/,
-      /function\s+\w+\s*\([^)]*\bres\b/,
+      /=\s*(?:async\s*)?\([^)]*\breq\b/,
+      /=\s*(?:async\s*)?\([^)]*\bres\b/,
       /\(\s*\breq\b\s*,\s*\bres\b/,
     ];
 
@@ -189,11 +189,11 @@ describe('Property 9: Example functions have JSDoc comments', () => {
       const filePath = path.resolve(__dirname, '..', '..', relPath);
       const content = await fs.readFile(filePath, 'utf-8');
 
-      // Find all exported function declarations
-      const exportRegex = /export\s+async\s+function\s+(\w+)|export\s+function\s+(\w+)/g;
+      // Find all exported arrow function declarations
+      const exportRegex = /export\s+const\s+(\w+)\s*=\s*(?:async\s*)?\(/g;
       let match;
       while ((match = exportRegex.exec(content)) !== null) {
-        const funcName = match[1] || match[2];
+        const funcName = match[1];
         const beforeFunc = content.slice(0, match.index);
         exportedFunctions.push({ relPath, funcName, beforeFunc });
       }
@@ -236,9 +236,9 @@ describe('Property 10: Async functions use async/await', () => {
       const filePath = path.resolve(__dirname, '..', '..', relPath);
       const content = await fs.readFile(filePath, 'utf-8');
 
-      // Match async function declarations and capture their bodies
-      // We find each "async function name(" and then extract the body
-      const asyncFuncRegex = /async\s+function\s+(\w+)\s*\([^)]*\)\s*\{/g;
+      // Match async arrow function declarations and capture their bodies
+      // We find each "const name = async (...) => {" and then extract the body
+      const asyncFuncRegex = /(?:export\s+)?const\s+(\w+)\s*=\s*async\s*\([^)]*\)\s*=>\s*\{/g;
       let match;
       while ((match = asyncFuncRegex.exec(content)) !== null) {
         const funcName = match[1];

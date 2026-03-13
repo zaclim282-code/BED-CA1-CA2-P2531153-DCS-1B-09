@@ -35,7 +35,11 @@ project-root/
 
 ## Coding Conventions
 
-- Use `async`/`await` for all asynchronous operations. No raw Promise chains.
+- Use `async`/`await` for all asynchronous operations. No raw Promise chains or `.then()` callbacks.
+- Arrow functions only — no `function` keyword declarations. Use `export const name = () => {}` or `export const name = async () => {}`.
+- No `import * as` or `import { x as y }` — avoid the `as` keyword in imports. Name your exports so they can be imported directly without aliasing.
+- Use named imports: `import { findAllTasks, findTaskById } from '../models/exampleModel.js'` — not `import * as model from ...`.
+- Model function names should be verbose and include the resource name (e.g., `findAllTasks`, `findTaskById`, `insertTask`, `updateTask`, `removeTask` — not `getAll`, `getById`, `create`).
 - Follow strict MVC separation:
   - **Models** have no HTTP concerns (no `req`, `res`, no Express imports). They receive a `db` instance and return plain data.
   - **Controllers** validate input, call model functions, and format HTTP responses. Errors are caught with `try`/`catch` and forwarded via `next(error)`.
@@ -74,8 +78,8 @@ When generating new code, follow the existing example files:
 
 - **New table schema** → add to `src/db/schema.js` following the `tasks` table pattern
 - **New seed data** → add to `src/db/seed.js` following the existing seed function pattern
-- **New model** → follow `src/models/exampleModel.js` (import schema from `src/db/schema.js`, async CRUD functions, `db` as first parameter, JSDoc on exports)
-- **New controller** → follow `src/controllers/exampleController.js` (import `db` from `src/db/connection.js`, try/catch with `next(error)`, `validationResult` checks, `AppError` for errors)
-- **New route** → follow `src/routes/exampleRoute.js` (Router instance, inline validation rules, wired to controller functions)
-- **New route registration** → add `app.use('/api/your-resource', yourRoutes)` in `index.js` before the `app.use(errorHandler)` line
+- **New model** → follow `src/models/exampleModel.js` (import schema from `src/db/schema.js`, verbose async arrow functions like `findAllItems`/`findItemById`/`insertItem`/`updateItem`/`removeItem`, `db` as first parameter, JSDoc on exports)
+- **New controller** → follow `src/controllers/exampleController.js` (named imports from model — no `import * as`, try/catch with `next(error)`, `validationResult` checks, `AppError` for errors, arrow functions)
+- **New route** → follow `src/routes/exampleRoute.js` (named Router export like `exampleRouter`, named imports from controller — no `import * as`, inline validation rules)
+- **New route registration** → add `app.use('/api/your-resource', yourRouter)` in `index.js` before the `app.use(errorHandler)` line
 - **New test** → copy `_extras/tests/example.test.js`, rename it, and adapt for your new endpoints

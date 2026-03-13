@@ -13,7 +13,7 @@ import { tasks } from '../db/schema.js';
 export { tasks };
 
 /** Get all tasks. Supports optional `completed` and `search` filters. */
-export async function getAll(db, filters = {}) {
+export const findAllTasks = async (db, filters = {}) => {
   const conditions = [];
 
   if (filters.completed !== undefined) {
@@ -29,28 +29,28 @@ export async function getAll(db, filters = {}) {
   }
 
   return await db.select().from(tasks);
-}
+};
 
 /** Get a single task by ID. Returns undefined if not found. */
-export async function getById(db, id) {
+export const findTaskById = async (db, id) => {
   const rows = await db.select().from(tasks).where(eq(tasks.id, id));
   return rows[0];
-}
+};
 
 /** Create a new task. `data.title` is required. */
-export async function create(db, data) {
+export const insertTask = async (db, data) => {
   const rows = await db.insert(tasks).values(data).returning();
   return rows[0];
-}
+};
 
 /** Update a task by ID. Returns undefined if not found. */
-export async function update(db, id, data) {
+export const updateTask = async (db, id, data) => {
   const rows = await db.update(tasks).set(data).where(eq(tasks.id, id)).returning();
   return rows[0];
-}
+};
 
 /** Delete a task by ID. Returns undefined if not found. */
-export async function remove(db, id) {
+export const removeTask = async (db, id) => {
   const rows = await db.delete(tasks).where(eq(tasks.id, id)).returning();
   return rows[0];
-}
+};

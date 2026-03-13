@@ -33,7 +33,7 @@ const taskList = document.getElementById('task-list');
  * Fetch all tasks from the API.
  * @returns {Promise<Array>} Array of task objects.
  */
-async function fetchTasks() {
+const fetchTasks = async () => {
   const response = await fetch(API_URL);
 
   if (!response.ok) {
@@ -41,14 +41,14 @@ async function fetchTasks() {
   }
 
   return response.json();
-}
+};
 
 /**
  * Create a new task.
  * @param {string} title - The title for the new task.
  * @returns {Promise<Object>} The created task object.
  */
-async function createTask(title) {
+const createTask = async (title) => {
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -60,7 +60,7 @@ async function createTask(title) {
   }
 
   return response.json();
-}
+};
 
 /**
  * Toggle a task's completed status.
@@ -68,7 +68,7 @@ async function createTask(title) {
  * @param {boolean} completed - The new completed value.
  * @returns {Promise<Object>} The updated task object.
  */
-async function toggleTask(id, completed) {
+const toggleTask = async (id, completed) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -80,13 +80,13 @@ async function toggleTask(id, completed) {
   }
 
   return response.json();
-}
+};
 
 /**
  * Delete a task by ID.
  * @param {number} id - The task ID to delete.
  */
-async function deleteTask(id) {
+const deleteTask = async (id) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
@@ -94,7 +94,7 @@ async function deleteTask(id) {
   if (!response.ok) {
     throw new Error('Failed to delete task');
   }
-}
+};
 
 // ---------------------------------------------------------------------------
 // Rendering — turn task data into HTML elements
@@ -105,7 +105,7 @@ async function deleteTask(id) {
  * Clears the list first, then creates an <li> for each task.
  * @param {Array} tasks - Array of task objects from the API.
  */
-function renderTasks(tasks) {
+const renderTasks = (tasks) => {
   // Clear the current list
   taskList.innerHTML = '';
 
@@ -139,7 +139,7 @@ function renderTasks(tasks) {
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
   });
-}
+};
 
 // ---------------------------------------------------------------------------
 // Load tasks — fetch from API and render
@@ -148,14 +148,14 @@ function renderTasks(tasks) {
 /**
  * Load all tasks from the API and render them on the page.
  */
-async function loadTasks() {
+const loadTasks = async () => {
   try {
     const tasks = await fetchTasks();
     renderTasks(tasks);
   } catch (error) {
     showError(error.message);
   }
-}
+};
 
 // ---------------------------------------------------------------------------
 // Error display helper
@@ -165,9 +165,9 @@ async function loadTasks() {
  * Show a simple error message to the user.
  * @param {string} message - The error message to display.
  */
-function showError(message) {
+const showError = (message) => {
   alert(message);
-}
+};
 
 // ---------------------------------------------------------------------------
 // Event listeners

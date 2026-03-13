@@ -30,10 +30,10 @@ const sampleTasks = [
 // --- Seed function ---
 
 /** Insert seed data into the database. */
-export async function seed(db) {
+export const seed = async (db) => {
   await db.insert(tasks).values(sampleTasks);
   console.log(`  Inserted ${sampleTasks.length} tasks`);
-}
+};
 
 // --- Database reset (no need to modify below) ---
 
@@ -45,7 +45,7 @@ const dbUrl = process.env.DATABASE_URL || 'file:local.db';
 const dbPath = dbUrl.replace('file:', '');
 const absoluteDbPath = path.resolve(projectRoot, dbPath);
 
-async function resetDatabase() {
+const resetDatabase = async () => {
   try {
     // Step 1 — Delete the old database file
     if (fs.existsSync(absoluteDbPath)) {
@@ -70,6 +70,6 @@ async function resetDatabase() {
     console.error('Failed to reset database:', error.message);
     process.exit(1);
   }
-}
+};
 
 resetDatabase();

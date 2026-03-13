@@ -35,7 +35,7 @@
  * @param {Function} callbacks.onDelete - Called with (id) when the delete button is clicked.
  * @returns {HTMLLIElement} The constructed list item element.
  */
-export function createTaskItem(task, { onToggle, onDelete }) {
+export const createTaskItem = (task, { onToggle, onDelete }) => {
   // Create the <li> wrapper
   const li = document.createElement('li');
 
@@ -70,4 +70,4 @@ export function createTaskItem(task, { onToggle, onDelete }) {
   li.appendChild(deleteBtn);
 
   return li;
-}
+};
