@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon --config _extras/nodemon.json index.js",
     "db": "node src/db/seed.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --roots=_extras/tests"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --roots=_extras/tests",
+    "export": "zip -r export.zip . -x 'node_modules/*' 'export.zip'"
   },
   "dependencies": {
     "@libsql/client": "^0.15.0",
