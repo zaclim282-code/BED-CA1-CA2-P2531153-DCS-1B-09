@@ -1,7 +1,6 @@
 // 📋 EXAMPLE FILE — use this as a reference when creating your own controller.
 
 import { validationResult } from 'express-validator';
-import { db } from '../db/connection.js';
 import { findAllTasks, findTaskById, insertTask, updateTask, removeTask } from '../models/exampleModel.js';
 import { AppError } from '../utils/_errors.js';
 
@@ -18,7 +17,7 @@ export const getAllTasks = async (req, res, next) => {
       filters.search = req.query.search;
     }
 
-    const tasks = await findAllTasks(db, filters);
+    const tasks = await findAllTasks(filters);
     res.status(200).json(tasks);
   } catch (error) {
     next(error);
@@ -28,7 +27,7 @@ export const getAllTasks = async (req, res, next) => {
 /** Get a single task by ID. */
 export const getTaskById = async (req, res, next) => {
   try {
-    const task = await findTaskById(db, Number(req.params.id));
+    const task = await findTaskById(Number(req.params.id));
 
     if (!task) {
       throw new AppError('NOT_FOUND');
@@ -49,7 +48,7 @@ export const createTask = async (req, res, next) => {
       throw new AppError('VALIDATION_ERROR', errors.array()[0].msg);
     }
 
-    const task = await insertTask(db, { title: req.body.title });
+    const task = await insertTask({ title: req.body.title });
     res.status(201).json(task);
   } catch (error) {
     next(error);
@@ -69,7 +68,7 @@ export const patchTask = async (req, res, next) => {
     if (req.body.title !== undefined) data.title = req.body.title;
     if (req.body.completed !== undefined) data.completed = req.body.completed;
 
-    const task = await updateTask(db, Number(req.params.id), data);
+    const task = await updateTask(Number(req.params.id), data);
 
     if (!task) {
       throw new AppError('NOT_FOUND');
@@ -84,7 +83,7 @@ export const patchTask = async (req, res, next) => {
 /** Delete a task by ID. Returns 204 on success, 404 if not found. */
 export const deleteTask = async (req, res, next) => {
   try {
-    const task = await removeTask(db, Number(req.params.id));
+    const task = await removeTask(Number(req.params.id));
 
     if (!task) {
       throw new AppError('NOT_FOUND');

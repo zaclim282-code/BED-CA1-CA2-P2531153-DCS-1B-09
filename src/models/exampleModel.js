@@ -7,13 +7,14 @@
  */
 
 import { eq, like, and } from 'drizzle-orm';
+import { db } from '../db/connection.js';
 import { tasks } from '../db/schema.js';
 
 // Re-export the schema so existing imports like `import { tasks } from '...exampleModel.js'` still work
 export { tasks };
 
 /** Get all tasks. Supports optional `completed` and `search` filters. */
-export const findAllTasks = async (db, filters = {}) => {
+export const findAllTasks = async (filters = {}) => {
   const conditions = [];
 
   if (filters.completed !== undefined) {
@@ -32,25 +33,25 @@ export const findAllTasks = async (db, filters = {}) => {
 };
 
 /** Get a single task by ID. Returns undefined if not found. */
-export const findTaskById = async (db, id) => {
+export const findTaskById = async (id) => {
   const rows = await db.select().from(tasks).where(eq(tasks.id, id));
   return rows[0];
 };
 
 /** Create a new task. `data.title` is required. */
-export const insertTask = async (db, data) => {
+export const insertTask = async (data) => {
   const rows = await db.insert(tasks).values(data).returning();
   return rows[0];
 };
 
 /** Update a task by ID. Returns undefined if not found. */
-export const updateTask = async (db, id, data) => {
+export const updateTask = async (id, data) => {
   const rows = await db.update(tasks).set(data).where(eq(tasks.id, id)).returning();
   return rows[0];
 };
 
 /** Delete a task by ID. Returns undefined if not found. */
-export const removeTask = async (db, id) => {
+export const removeTask = async (id) => {
   const rows = await db.delete(tasks).where(eq(tasks.id, id)).returning();
   return rows[0];
 };
