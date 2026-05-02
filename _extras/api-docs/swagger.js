@@ -43,6 +43,20 @@ export const setupSwagger = async (app) => {
   const generate = swaggerAutogen();
   await generate(outputFile, routes, doc);
 
-  const swaggerDocument = JSON.parse(readFileSync(outputFile, 'utf-8'));
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  // Serve spec dynamically so host/scheme reflect the actual request origin.
+  // This makes Swagger UI work in Codespaces, proxies, and other dynamic URLs.
+  app.get('/api-docs/swagger.json', (req, res) => {
+    const base = JSON.parse(readFileSync(outputFile, 'utf-8'));
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    const proto = req.headers['x-forwarded-proto'] || req.protocol;
+    base.host = host;
+    base.schemes = [proto];
+    res.json(base);
+  });
+
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(null, { swaggerOptions: { url: '/api-docs/swagger.json' } }),
+  );
 };
