@@ -78,8 +78,8 @@ When generating new code, follow the existing example files:
 
 - **New table schema** → add to `src/db/schema.js` following the `tasks` table pattern
 - **New seed data** → add to `src/db/seed.js` following the existing seed function pattern
-- **New model** → follow `src/models/exampleModel.js` (import schema from `src/db/schema.js`, verbose async arrow functions like `findAllItems`/`findItemById`/`insertItem`/`updateItem`/`removeItem`, `db` as first parameter, JSDoc on exports)
-- **New controller** → follow `src/controllers/exampleController.js` (named imports from model — no `import * as`, try/catch with `next(error)`, `validationResult` checks, `AppError` for errors, arrow functions)
-- **New route** → follow `src/routes/exampleRoute.js` (named Router export like `exampleRouter`, named imports from controller — no `import * as`, inline validation rules)
+- **New model** → follow the existing task model pattern in `src/models/` (import schema from `src/db/schema.js`, verbose async arrow functions like `findAllItems`/`findItemById`/`insertItem`/`updateItem`/`removeItem`, `db` as first parameter, JSDoc on exports)
+- **New controller** → follow the existing task controller pattern in `src/controllers/` (named imports from model — no `import * as`, try/catch with `next(error)`, `validationResult` checks, `AppError` for errors, arrow functions)
+- **New route** → follow the existing task route pattern in `src/routes/` (named Router export like `tasksRouter`, named imports from controller — no `import * as`, inline validation rules)
 - **New route registration** → add `app.use('/api/your-resource', yourRouter)` in `index.js` before the `app.use(errorHandler)` line
-- **New test** → copy `_extras/tests/example.test.js`, rename it, and adapt for your new endpoints
+- **New test** → copy `_extras/tests/health.test.js` or another existing test file, rename it, and adapt for your new endpoints

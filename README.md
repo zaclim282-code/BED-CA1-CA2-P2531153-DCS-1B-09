@@ -16,9 +16,9 @@ Then open [http://localhost:3000](http://localhost:3000). API docs are at [http:
 
 1. **Schema** — add your table in `src/db/schema.js` (copy the `tasks` table pattern)
 2. **Seed** — add sample data in `src/db/seed.js`, then run `npm run db`
-3. **Model** — create `src/models/yourModel.js` (copy `exampleModel.js`)
-4. **Controller** — create `src/controllers/yourController.js` (copy `exampleController.js`)
-5. **Route** — create `src/routes/yourRoute.js` (copy `exampleRoute.js`)
+3. **Model** — create `src/models/yourModel.js` following the existing task model pattern
+4. **Controller** — create `src/controllers/yourController.js` following the existing task controller pattern
+5. **Route** — create `src/routes/yourRoute.js` following the existing task route pattern
 6. **Register** — add `app.use('/api/your-resource', yourRoutes)` in `index.js` (before the error handler)
 7. **Frontend** — add a new `.html` page in `src/frontend/` (copy `index.html`)
 
@@ -29,9 +29,9 @@ Then open [http://localhost:3000](http://localhost:3000). API docs are at [http:
 | `src/db/schema.js` | Add your table definitions |
 | `src/db/seed.js` | Add seed data for your tables |
 | `index.js` | Register your new routes |
-| `src/models/` | Create your model (copy `exampleModel.js`) |
-| `src/controllers/` | Create your controller (copy `exampleController.js`) |
-| `src/routes/` | Create your route file (copy `exampleRoute.js`) |
+| `src/models/` | Create your model following the task pattern |
+| `src/controllers/` | Create your controller following the task pattern |
+| `src/routes/` | Create your route file following the task pattern |
 | `src/frontend/` | Create your HTML pages, JS, and CSS |
 
 Everything else is infrastructure — you shouldn't need to change it.
