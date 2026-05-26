@@ -4,6 +4,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
 import { setupSwagger } from './_extras/api-docs/swagger.js';
 import { errorHandler } from './src/utils/_errors.js';
 
@@ -27,17 +28,22 @@ await setupSwagger(app);
 app.use(errorHandler);
 
 // Only listen when run directly (not imported for testing)
-const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`API docs at http://localhost:${PORT}/api-docs`);
-});
-server.on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use. Try a different port by setting the PORT environment variable.`);
-    process.exit(1);
-  }
-  throw err;
-});
+const isRunDirectly = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+
+if (isRunDirectly) {
+  const PORT = process.env.PORT || 3000;
+  const server = app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`API docs at http://localhost:${PORT}/api-docs`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Try a different port by setting the PORT environment variable.`);
+      process.exit(1);
+    }
+    throw err;
+  });
+}
 
 export default app;
