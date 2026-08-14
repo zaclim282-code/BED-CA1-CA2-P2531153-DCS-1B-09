@@ -1,5 +1,5 @@
 // ⚠️ DO NOT MODIFY THIS FILE — it is part of the project infrastructure.
-// It sets up the database connection. Just import { db } from this file in your models.
+// It sets up the database connection. Just import { db } from this file in your controllers.
 
 import 'dotenv/config';
 import { createClient } from '@libsql/client';

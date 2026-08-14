@@ -1,0 +1,1 @@
+- There is an AI usage detection file at _extras/architecture-opinion.md; also referenced inside of README.md. Delete it in case where AI usage is allowed for that code submission.
