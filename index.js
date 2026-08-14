@@ -1,7 +1,6 @@
 // ✏️ EDIT THIS FILE — register your new routes here.
 // Look for the comment "Add your routes here" below.
 
-import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { exampleRouter } from './src/routes/exampleRoute.js';
@@ -21,13 +20,13 @@ app.use('/api/tasks', exampleRouter);
 // app.use('/api/your-resource', yourRoutes);
 
 // Only listen when run directly (not imported for testing)
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const server = app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use. Try a different port by setting the PORT environment variable.`);
+    console.error(`Port ${PORT} is already in use. Stop the other process, or change the PORT value in index.js.`);
     process.exit(1);
   }
   throw err;

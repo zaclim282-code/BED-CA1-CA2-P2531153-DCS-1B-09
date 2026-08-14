@@ -13,7 +13,6 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import 'dotenv/config';
 
 // Import your table schemas here
 import { tasks } from './schema.js';
@@ -41,7 +40,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..', '..');
 
-const dbUrl = process.env.DATABASE_URL || 'file:local.db';
+const dbUrl = 'file:local.db';
 const dbPath = dbUrl.replace('file:', '');
 const absoluteDbPath = path.resolve(projectRoot, dbPath);
 

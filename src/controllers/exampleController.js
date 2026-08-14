@@ -19,11 +19,11 @@ export const getAllTasks = async (req, res) => {
       conditions.push(like(tasks.title, `%${req.query.search}%`));
     }
 
-    const rowsx = conditions.length > 0
+    const rows = conditions.length > 0
       ? await db.select().from(tasks).where(and(...conditions))
       : await db.select().from(tasks);
 
-    res.status(200).json(rowsx);
+    res.status(200).json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch tasks' });
   }
@@ -32,8 +32,8 @@ export const getAllTasks = async (req, res) => {
 /** Get a single task by ID. */
 export const getTaskById = async (req, res) => {
   try {
-    const rowsx = await db.select().from(tasks).where(eq(tasks.id, Number(req.params.id)));
-    const task = rowsx[0];
+    const rows = await db.select().from(tasks).where(eq(tasks.id, Number(req.params.id)));
+    const task = rows[0];
 
     if (!task) {
       return res.status(404).json({ error: 'Task not found' });
@@ -52,8 +52,8 @@ export const createTask = async (req, res) => {
       return res.status(400).json({ error: 'Title is required' });
     }
 
-    const rowsx = await db.insert(tasks).values({ title: req.body.title }).returning();
-    res.status(201).json(rowsx[0]);
+    const rows = await db.insert(tasks).values({ title: req.body.title }).returning();
+    res.status(201).json(rows[0]);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create task' });
   }
@@ -70,8 +70,8 @@ export const patchTask = async (req, res) => {
     if (req.body.title !== undefined) data.title = req.body.title;
     if (req.body.completed !== undefined) data.completed = req.body.completed;
 
-    const rowsx = await db.update(tasks).set(data).where(eq(tasks.id, Number(req.params.id))).returning();
-    const task = rowsx[0];
+    const rows = await db.update(tasks).set(data).where(eq(tasks.id, Number(req.params.id))).returning();
+    const task = rows[0];
 
     if (!task) {
       return res.status(404).json({ error: 'Task not found' });
@@ -86,9 +86,9 @@ export const patchTask = async (req, res) => {
 /** Delete a task by ID. Returns 204 on success, 404 if not found. */
 export const deleteTask = async (req, res) => {
   try {
-    const rowsx = await db.delete(tasks).where(eq(tasks.id, Number(req.params.id))).returning();
+    const rows = await db.delete(tasks).where(eq(tasks.id, Number(req.params.id))).returning();
 
-    if (!rowsx[0]) {
+    if (!rows[0]) {
       return res.status(404).json({ error: 'Task not found' });
     }
 
