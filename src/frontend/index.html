@@ -4,14 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App</title>
+  <title>API Playground</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <main>
-    <h1>Server status</h1>
-    <p id="status">Checking...</p>
+    <h1>API Playground</h1>
+    <p class="hint">Click the button to send a request to the server and see the response.</p>
+
+    <!-- REQUEST: what we send, and where it goes -->
+    <section class="card">
+      <span class="label">Request</span>
+      <div class="line">
+        <span class="method">GET</span>
+        <span class="url">/api/health</span>
+      </div>
+      <button id="send-btn">Send request</button>
+    </section>
+
+    <!-- RESPONSE: what the server sends back -->
+    <section class="card">
+      <span class="label">Response</span>
+      <div class="line">
+        <span class="status-label">Status:</span>
+        <span id="status" class="status">—</span>
+      </div>
+      <pre id="body">Waiting for a request...</pre>
+    </section>
   </main>
 
   <script src="main.js" defer></script>

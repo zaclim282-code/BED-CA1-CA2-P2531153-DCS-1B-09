@@ -1,17 +1,27 @@
-// Check the backend health endpoint and show the result on the page.
+// When the button is clicked, send a GET request to /api/health
+// and show the response status and body on the page.
 
+const sendBtn = document.getElementById('send-btn');
 const statusEl = document.getElementById('status');
+const bodyEl = document.getElementById('body');
 
-const checkHealth = async () => {
+const sendRequest = async () => {
+  statusEl.textContent = '...';
+  bodyEl.textContent = 'Sending request...';
+
   try {
     const response = await fetch('/api/health');
     const data = await response.json();
-    statusEl.textContent = data.status === 'ok'
-      ? 'Server is healthy ✅'
-      : 'Server responded, but not healthy.';
+
+    // Show the HTTP status code (e.g. 200) and the JSON body the server returned.
+    statusEl.textContent = `${response.status} ${response.statusText}`;
+    statusEl.classList.toggle('ok', response.ok);
+    bodyEl.textContent = JSON.stringify(data, null, 2);
   } catch (error) {
-    statusEl.textContent = 'Could not reach the server. Run "npm run dev" and refresh.';
+    statusEl.textContent = 'No response';
+    statusEl.classList.remove('ok');
+    bodyEl.textContent = 'Could not reach the server. Run "npm run dev" and try again.';
   }
 };
 
-checkHealth();
+sendBtn.addEventListener('click', sendRequest);
