@@ -2,15 +2,12 @@
 // Look for the comment "Add your routes here" below.
 
 import express from 'express';
-import cors from 'cors';
 import { exampleRouter } from './src/routes/exampleRoute.js';
 
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
-app.use(express.static('src/frontend'));
 
 // Routes
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
