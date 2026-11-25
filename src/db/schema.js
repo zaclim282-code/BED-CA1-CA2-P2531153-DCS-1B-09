@@ -8,9 +8,30 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 /** Tasks table. */
-export const tasks = sqliteTable('tasks', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
-  title: text('title').notNull(),
-  completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
-  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+
+// Table	Purpose
+// users	Player profile, coins and username- DOne
+// crops	Types of mangoes, growth times and prices -DOne
+
+// farm_plots	Tracks crops planted by each player
+// inventory	Tracks harvested mangoes owned by players
+// shop_items	Seeds and upgrades available for purchase
+// user_upgrades	Tracks upgrades purchased by players
+
+
+export const users = sqliteTable('users', {
+  userid: text('id').primaryKey(),
+  username: text('username').notNull().unique(), 
+  password: text('password').notNull(),
+  coins : integer('coins').notNull().default(100)
+  
+});
+
+export const crops = sqliteTable('crops', {
+  cropId: text('crop_id').primaryKey(),
+  name: text('name').notNull().unique(),
+  seedCost: integer('seed_cost').notNull(),
+  sellPrice: integer('sell_price').notNull(),
+  growthTime: integer('growth_time').notNull(),
+  
 });

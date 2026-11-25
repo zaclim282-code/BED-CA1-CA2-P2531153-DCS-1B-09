@@ -15,27 +15,60 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 // Import your table schemas here
-import { tasks } from './schema.js';
+
+// import { db } from "./connection.js";
+import { users, crops } from "./schema.js";
 
 // --- Seed data ---
 
+
 /** Sample tasks inserted when the database is reset. */
-const sampleTasks = [
-  { title: 'Buy groceries', completed: false },
-  { title: 'Read a book', completed: true },
-  { title: 'Go for a walk', completed: false },
+
+/** Insert seed data into the database. */
+const sampleUsers = [
+  {
+    userid: "player001",
+    username: "Alice",
+    password: "demo-only",
+    coins: 100
+  },
+  {
+    userid: "player002",
+    username: "Bob",
+    password: "demo-only",
+    coins: 150
+  }
+];
+
+const sampleCrops = [
+  {
+    cropId: "crop001",
+    name: "Regular Mango",
+    seedCost: 10,
+    sellPrice: 20,
+    growthTime: 60
+  },
+  {
+    cropId: "crop002",
+    name: "Golden Mango",
+    seedCost: 30,
+    sellPrice: 60,
+    growthTime: 180
+  }
 ];
 
 // --- Seed function ---
 
-/** Insert seed data into the database. */
 export const seed = async (db) => {
-  await db.insert(tasks).values(sampleTasks);
-  console.log(`  Inserted ${sampleTasks.length} tasks`);
+  await db.insert(users).values(sampleUsers);
+  console.log(`Inserted ${sampleUsers.length} users`);
+
+  await db.insert(crops).values(sampleCrops);
+  console.log(`Inserted ${sampleCrops.length} crops`);
 };
 
 // --- Database reset (no need to modify below) ---
-
+// This alr import  connection.js
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..', '..');

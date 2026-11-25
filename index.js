@@ -2,8 +2,7 @@
 // Look for the comment "Add your routes here" below.
 
 import express from 'express';
-import { exampleRouter } from './src/routes/exampleRoute.js';
-
+import userRoutes from './src/routes/userRoutes.js';
 const app = express();
 
 // Middleware
@@ -11,7 +10,7 @@ app.use(express.json());
 
 // Routes
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
-app.use('/api/tasks', exampleRouter);
+app.use(userRoutes);
 
 // Add your routes here, like this:
 // app.use('/api/your-resource', yourRoutes);

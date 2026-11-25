@@ -8,6 +8,8 @@ Express.js + libsql + Drizzle ORM API starter. Comes with a working task list AP
 npm install       # install dependencies
 npm run db        # create and seed the database
 npm run dev       # start the dev server (auto-reloads on changes)
+npm install bcrypt # bcrypt to securely hash passwords before storing them in db
+
 ```
 
 The API is then available at [http://localhost:3000/api](http://localhost:3000/api) (e.g. `GET /api/health`).
